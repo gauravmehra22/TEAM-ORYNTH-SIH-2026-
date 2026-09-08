@@ -1,0 +1,4 @@
+phc_id,phc_name,distance_km,current_load,available_doctors
+PHC01,PHC Ramnagar,2.5,40,3
+PHC02,PHC Haldwani,6.0,75,5
+PHC03,PHC Nainital,8.5,30,4

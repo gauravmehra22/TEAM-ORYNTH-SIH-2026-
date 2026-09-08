@@ -1,0 +1,4 @@
+patient_id,age,gender,pregnancy,bp_systolic,bp_diastolic,hemoglobin,blood_sugar,temperature,previous_complication,distance_phc01_km,distance_phc02_km,distance_phc03_km
+P001,29,Female,1,150,95,8.5,130,99.2,1,2.5,6.0,8.5
+P002,24,Female,0,118,76,12.5,95,98.4,0,1.5,5.0,7.5
+P003,32,Female,1,140,88,9.5,125,98.6,0,4.0,2.0,6.0
