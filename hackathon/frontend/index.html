@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEHATRA - ASHA Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Login is the first screen shown before either role dashboard. -->
+    <section class="login-screen" id="loginScreen">
+        <div class="login-brand">
+            <div class="brand-symbol">S</div>
+            <div>
+                <strong>SEHATRA</strong>
+                <span>Rural Healthcare</span>
+            </div>
+        </div>
+
+        <div class="login-layout">
+            <div class="login-intro">
+                <span class="header-kicker">SEHATRA CARE NETWORK</span>
+                <h1>Healthcare that stays connected.</h1>
+                <p>Secure access to health records, care coordination, and essential services for every community.</p>
+                <div class="security-note">
+                    <span class="security-icon">+</span>
+                    <span>Your healthcare information is protected and accessible only according to your role.</span>
+                </div>
+            </div>
+
+            <div class="login-card">
+                <div class="login-card-heading">
+                    <span class="eyebrow">WELCOME TO SEHATRA</span>
+                    <h2>Choose your access</h2>
+                    <p>Select a role to continue to your secure dashboard.</p>
+                </div>
+
+                <div class="role-options" id="roleOptions">
+                    <button class="role-option" type="button" data-role="patient">
+                        <span class="role-icon">P</span>
+                        <span><strong>Login as Patient</strong><small>View your personal health record</small></span>
+                        <span class="role-arrow">&#8594;</span>
+                    </button>
+                    <button class="role-option" type="button" data-role="doctor">
+                        <span class="role-icon doctor-icon">D</span>
+                        <span><strong>Login as Doctor</strong><small>Manage patients and care services</small></span>
+                        <span class="role-arrow">&#8594;</span>
+                    </button>
+                </div>
+
+                <form class="login-form" id="patientLoginForm" hidden>
+                    <button class="back-link" type="button" data-back-login>&#8592; Choose another role</button>
+                    <h3>Patient login</h3>
+                    <p class="form-help">Use your Health ID and secure demo PIN.</p>
+                    <label for="patientLoginId">Health ID</label>
+                    <input id="patientLoginId" type="text" placeholder="SH-2026-00124" autocomplete="username" required>
+                    <label for="patientLoginPassword">Password / PIN</label>
+                    <input id="patientLoginPassword" type="password" placeholder="Enter password" autocomplete="current-password" required>
+                    <div class="demo-credentials"><strong>Demo patient access</strong><span>Health ID: SH-2026-00124</span><span>Password: patient123</span></div>
+                    <p class="login-error" id="patientLoginError" role="alert"></p>
+                    <button class="login-submit" type="submit">Open Patient Dashboard <span>&#8594;</span></button>
+                </form>
+
+                <form class="login-form" id="doctorLoginForm" hidden>
+                    <button class="back-link" type="button" data-back-login>&#8592; Choose another role</button>
+                    <h3>Doctor login</h3>
+                    <p class="form-help">Use the demo credentials to access the care workspace.</p>
+                    <label for="doctorLoginId">Username / Health ID</label>
+                    <input id="doctorLoginId" type="text" placeholder="doctor" autocomplete="username" required>
+                    <label for="doctorLoginPassword">Password</label>
+                    <input id="doctorLoginPassword" type="password" placeholder="Enter password" autocomplete="current-password" required>
+                    <div class="demo-credentials"><strong>Demo doctor access</strong><span>Username: doctor</span><span>Password: doctor123</span></div>
+                    <p class="login-error" id="doctorLoginError" role="alert"></p>
+                    <button class="login-submit" type="submit">Open Doctor Dashboard <span>&#8594;</span></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div class="app" id="doctorApp" hidden>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>SEHATRA</h2>
+                <p>Rural Healthcare</p>
+            </div>
+
+            <nav aria-label="Healthcare workspace">
+                <span class="nav-label">WORKSPACE</span>
+                <a class="active" data-view="dashboard"><span class="nav-mark">D</span>Dashboard</a>
+                <a data-view="patients"><span class="nav-mark">P</span>Patients</a>
+                <a data-view="register"><span class="nav-mark">+</span>Register Patient</a>
+                <a data-view="referrals"><span class="nav-mark">R</span>Referrals</a>
+                <a data-view="followups"><span class="nav-mark">F</span>Follow-ups</a>
+            </nav>
+
+            <div class="user">
+                <strong>ASHA Worker</strong>
+                <span>Health Worker</span>
+                <button class="logout-btn" type="button" data-logout>Log out</button>
+            </div>
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main">
+
+            <header>
+                <div>
+                    <span class="header-kicker">SEHATRA CARE NETWORK</span>
+                    <h1>Dashboard Overview</h1>
+                    <p>Track patients, referrals, and follow-ups from one place.</p>
+                </div>
+
+                <button class="register-btn">
+                    + Register Patient
+                </button>
+            </header>
+
+
+            <!-- Statistics -->
+            <section class="stats" id="dashboardStats">
+
+                <div class="card">
+                    <span>Total Patients</span>
+                    <strong>128</strong>
+                    <small>Registered patients</small>
+                </div>
+
+                <div class="card">
+                    <span>High-Risk Patients</span>
+                    <strong>12</strong>
+                    <small>Require attention</small>
+                </div>
+
+                <div class="card">
+                    <span>Pending Referrals</span>
+                    <strong>7</strong>
+                    <small>Awaiting action</small>
+                </div>
+
+                <div class="card">
+                    <span>Follow-ups</span>
+                    <strong>18</strong>
+                    <small>Due this week</small>
+                </div>
+
+            </section>
+
+
+            <!-- Recent Patients -->
+            <section class="panel" id="patientsPanel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Recent Patients</h2>
+                        <p>Recently registered patients in your area</p>
+                    </div>
+                    <div class="patient-tools">
+                        <input class="patient-search" id="patientSearch" type="search" placeholder="Search name, ID, village" aria-label="Search patients">
+                        <button class="view-btn">View All</button>
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Health ID</th>
+                            <th>Age</th>
+                            <th>Risk</th>
+                            <th>Last Visit</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="patientTableBody">
+                    </tbody>
+                </table>
+                </div>
+
+            </section>
+
+            <section class="panel workspace-panel" id="referralsPanel" hidden>
+                <div class="panel-header">
+                    <div>
+                        <h2>Referrals</h2>
+                        <p>Track patients referred to nearby health facilities.</p>
+                    </div>
+                    <span class="panel-count" id="referralCount">0 pending</span>
+                    <button class="register-btn" id="newReferralBtn" style="margin-left: 12px;">+ New Referral</button>
+                </div>
+
+                <div class="detail-list" id="referralsList">
+                </div>
+            </section>
+
+            <section class="panel workspace-panel" id="followupsPanel" hidden>
+                <div class="panel-header">
+                    <div>
+                        <h2>Follow-ups</h2>
+                        <p>Upcoming visits and care actions requiring attention.</p>
+                    </div>
+                    <span class="panel-count">18 this week</span>
+                </div>
+
+                <div class="detail-list">
+                    <article class="detail-row">
+                        <div class="detail-avatar high-bg">NP</div>
+                        <div class="detail-main">
+                            <strong>Neha Pant</strong>
+                            <span>Blood pressure check · Bhimtal</span>
+                        </div>
+                        <span class="status-badge urgent">Due today</span>
+                        <span class="detail-date">08 Sep 2026</span>
+                    </article>
+                    <article class="detail-row">
+                        <div class="detail-avatar medium-bg">MK</div>
+                        <div class="detail-main">
+                            <strong>Mohan Kumar</strong>
+                            <span>Medicine adherence check · Bhowali</span>
+                        </div>
+                        <span class="status-badge pending">Upcoming</span>
+                        <span class="detail-date">10 Sep 2026</span>
+                    </article>
+                    <article class="detail-row">
+                        <div class="detail-avatar low-bg">LS</div>
+                        <div class="detail-main">
+                            <strong>Lata Sharma</strong>
+                            <span>Postnatal care visit · Naukuchiatal</span>
+                        </div>
+                        <span class="status-badge pending">Upcoming</span>
+                        <span class="detail-date">12 Sep 2026</span>
+                    </article>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Patients see this private dashboard instead of the doctor workspace. -->
+    <main class="patient-dashboard" id="patientDashboard" hidden>
+        <header class="patient-dashboard-header">
+            <div class="login-brand compact-brand">
+                <div class="brand-symbol">S</div>
+                <div><strong>SEHATRA</strong><span>Rural Healthcare</span></div>
+            </div>
+            <button class="logout-btn light-logout" type="button" data-logout>Log out</button>
+        </header>
+
+        <section class="patient-welcome">
+            <div>
+                <span class="header-kicker">MY HEALTH PASSPORT</span>
+                <h1>Welcome back, Sunita.</h1>
+                <p>Your personal care information, appointments, and health history in one secure place.</p>
+            </div>
+            <button class="patient-passport-btn" type="button" onclick="openPatientDashboardPassport()">View Health Passport</button>
+        </section>
+
+        <section class="patient-summary-grid">
+            <article class="patient-identity-card">
+                <div class="patient-avatar">SD</div>
+                <div><span>Patient</span><h2>Sunita Devi</h2><strong>SH-2026-00124</strong></div>
+                <div class="identity-details"><span><b>Age</b> 46 years</span><span><b>Gender</b> Female</span><span><b>Village</b> Bhimtal</span></div>
+            </article>
+            <article class="patient-status-card"><span class="card-label">Next appointment</span><strong>18 Sep 2026</strong><p>Community Health Centre</p><span class="status-badge pending">Blood pressure review</span></article>
+            <article class="patient-status-card"><span class="card-label">Care status</span><strong class="status-good">Active care</strong><p>Your health record is up to date.</p><span class="status-badge complete">Last visit: Today</span></article>
+        </section>
+
+        <section class="patient-content-grid">
+            <article class="panel patient-information-panel">
+                <div class="panel-header"><div><h2>My medical information</h2><p>Only your personal health information is shown here.</p></div></div>
+                <div class="patient-medical-grid">
+                    <div><span>Current condition</span><strong>Hypertension</strong></div>
+                    <div><span>Current medicines</span><strong>Amlodipine 5mg</strong></div>
+                    <div><span>Allergies</span><strong>None reported</strong></div>
+                    <div><span>Emergency contact</span><strong>Family contact on file</strong></div>
+                </div>
+            </article>
+            <article class="panel patient-timeline-panel">
+                <div class="panel-header"><div><h2>Recent consultations</h2><p>Your latest care activity</p></div></div>
+                <div class="patient-timeline"><div><span class="timeline-dot"></span><strong>General consultation</strong><small>Today · ASHA Care Network</small></div><div><span class="timeline-dot"></span><strong>Blood pressure assessment</strong><small>20 Aug 2026 · Bhimtal PHC</small></div></div>
+            </article>
+        </section>
+
+        <section class="patient-content-grid lower-patient-grid">
+            <article class="panel patient-list-panel"><div class="panel-header"><div><h2>Upcoming care</h2><p>Appointments, referrals, and reminders</p></div></div><div class="patient-reminder"><span class="reminder-icon">A</span><div><strong>Blood pressure review</strong><span>18 Sep 2026 · Community Health Centre</span></div><span class="status-badge pending">Upcoming</span></div><div class="patient-reminder"><span class="reminder-icon">R</span><div><strong>Referral follow-up</strong><span>Confirm hospital consultation</span></div><span class="status-badge progress">In progress</span></div></article>
+            <article class="panel patient-list-panel"><div class="panel-header"><div><h2>Medical reports</h2><p>Your available care documents</p></div></div><div class="report-row"><span class="report-icon">+</span><div><strong>Blood pressure report</strong><span>Updated today</span></div><button type="button" class="view-btn">View</button></div><div class="report-row"><span class="report-icon">+</span><div><strong>Health Passport QR</strong><span>Ready to share securely</span></div><button type="button" class="view-btn" onclick="openPatientDashboardPassport()">Open</button></div></article>
+        </section>
+    </main>
+<!-- Patient Registration Modal -->
+<div id="patientModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <div>
+                <h2>Register New Patient</h2>
+                <p>Create a digital health record</p>
+            </div>
+
+            <button id="closeModal" class="close-btn">&times;</button>
+        </div>
+
+        <form id="patientForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Patient Name</label>
+                    <input type="text" id="patientName" placeholder="Enter full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" id="patientAge" placeholder="Enter age" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Gender</label>
+                    <select id="patientGender" required>
+                        <option value="">Select gender</option>
+                        <option>Female</option>
+                        <option>Male</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Village</label>
+                    <input type="text" id="patientVillage" placeholder="Enter village" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="patientPhone" placeholder="Enter phone number">
+                </div>
+
+                <div class="form-group">
+                    <label>Medical Conditions</label>
+                    <input type="text" id="patientCondition" placeholder="e.g. Diabetes, BP">
+                </div>
+
+                <div class="form-group full">
+                    <label>Current Medicines</label>
+                    <textarea id="patientMedicine" placeholder="Enter current medicines"></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label>Allergies</label>
+                    <textarea id="patientAllergy" placeholder="Enter known allergies"></textarea>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="cancelBtn" class="cancel-btn">
+                    Cancel
+                </button>
+
+                <button type="submit" class="save-btn">
+                    Generate Health ID
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div><!-- Health Passport Modal -->
+<div id="passportModal" class="modal">
+
+    <div class="modal-content passport">
+
+        <div class="modal-header">
+            <div>
+                <h2>Digital Health Passport</h2>
+                <p>SEHATRA Rural Healthcare Network</p>
+            </div>
+
+            <button id="closePassport" class="close-btn">&times;</button>
+        </div>
+
+        <div class="passport-id">
+            <div>
+                <span>Health ID</span>
+                <strong id="displayHealthId">SH-2026-00000</strong>
+            </div>
+
+            <div id="qrcode"></div>
+        </div>
+
+        <div class="patient-info">
+
+            <div>
+                <span>Patient Name</span>
+                <strong id="displayName">-</strong>
+            </div>
+
+            <div>
+                <span>Age</span>
+                <strong id="displayAge">-</strong>
+            </div>
+
+            <div>
+                <span>Gender</span>
+                <strong id="displayGender">-</strong>
+            </div>
+
+            <div>
+                <span>Village</span>
+                <strong id="displayVillage">-</strong>
+            </div>
+
+        </div>
+
+        <div class="health-section">
+            <h3>Medical Information</h3>
+
+            <div class="health-item">
+                <span>Medical Conditions</span>
+                <p id="displayCondition">None reported</p>
+            </div>
+
+            <div class="health-item">
+                <span>Current Medicines</span>
+                <p id="displayMedicine">None reported</p>
+            </div>
+
+            <div class="health-item">
+                <span>Allergies</span>
+                <p id="displayAllergy">None reported</p>
+            </div>
+        </div>
+
+        <div class="passport-footer">
+            <span>✓ Record created by ASHA Worker</span>
+            <button class="print-btn" onclick="window.print()">
+                Print Passport
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Patient Details Viewer -->
+
+<div id="patientViewer" class="modal">
+
+    <div class="modal-content passport">
+
+        <div class="modal-header">
+            <div>
+                <h2>Patient Health Passport</h2>
+                <p>SEHATRA Digital Health Record</p>
+            </div>
+
+            <button id="closePatientViewer" class="close-btn">
+                &times;
+            </button>
+        </div>
+
+        <div class="passport-id">
+
+            <div>
+                <span>Health ID</span>
+                <strong id="viewerHealthId">SH-2026-00124</strong>
+            </div>
+
+            <div id="viewerQr"></div>
+
+        </div>
+
+
+        <div class="patient-info">
+
+            <div>
+                <span>Patient Name</span>
+                <strong id="viewerName">-</strong>
+            </div>
+
+            <div>
+                <span>Age</span>
+                <strong id="viewerAge">-</strong>
+            </div>
+
+            <div>
+                <span>Gender</span>
+                <strong id="viewerGender">-</strong>
+            </div>
+
+            <div>
+                <span>Village</span>
+                <strong id="viewerVillage">-</strong>
+            </div>
+
+        </div>
+
+
+        <div class="health-section">
+
+            <h3>Medical Information</h3>
+
+            <div class="health-item">
+                <span>Risk Level</span>
+                <p id="viewerRisk">-</p>
+            </div>
+
+            <div class="health-item">
+                <span>Medical Conditions</span>
+                <p id="viewerCondition">-</p>
+            </div>
+
+            <div class="health-item">
+                <span>Current Medicines</span>
+                <p id="viewerMedicine">-</p>
+            </div>
+
+            <div class="health-item">
+                <span>Allergies</span>
+                <p id="viewerAllergy">-</p>
+            </div>
+
+        </div>
+
+
+        <div class="passport-footer">
+
+            <span>✓ Authorized healthcare record</span>
+
+            <button class="print-btn" onclick="window.print()">
+                Print Passport
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- New Referral Modal -->
+<div id="referralModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div>
+                <h2>Create Referral</h2>
+                <p>Refer a patient to another facility</p>
+            </div>
+            <button id="closeReferralModal" class="close-btn">&times;</button>
+        </div>
+
+        <form id="referralForm">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Patient Health ID</label>
+                    <input type="text" id="referralHealthId" placeholder="SH-2026-00124" required>
+                </div>
+                <div class="form-group">
+                    <label>Triage Priority</label>
+                    <select id="referralPriority" required>
+                        <option value="">Select priority</option>
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Referred From</label>
+                    <input type="text" id="referralFrom" placeholder="e.g. ASHA Care Network" required>
+                </div>
+                <div class="form-group">
+                    <label>Referred To</label>
+                    <input type="text" id="referralTo" placeholder="e.g. District Hospital" required>
+                </div>
+                <div class="form-group full">
+                    <label>Symptoms</label>
+                    <textarea id="referralSymptoms" placeholder="Describe symptoms" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" id="cancelReferralBtn" class="cancel-btn">Cancel</button>
+                <button type="submit" class="save-btn">Create Referral</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- QR Code Library and app logic load after every dashboard element exists. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
